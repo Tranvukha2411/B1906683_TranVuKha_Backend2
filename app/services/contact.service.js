@@ -4,7 +4,7 @@ class ContactService{
     constructor(client){
         this.contact = client.db().collection("contacts");
     }
-
+    //dinh nghia cac phuong thuc truy xuat csdl su dung mongodb api
     extractContactData(payload){
         const contact = {
             name: payload.name,
@@ -13,7 +13,8 @@ class ContactService{
             phone: payload.phone,
             favorite: payload.favorite,
         };
-
+        //remove undefined fields
+        //kiem tra co s o object voi key
         Object.keys(contact).forEach(
             (key) => contact[key] === undefined && delete contact[key]
         );
@@ -58,7 +59,7 @@ class ContactService{
             {$set: update},
             {returnDocument: "after"}
         );
-
+        //xóa value
         return result;
     }
     async delete (id){
@@ -76,7 +77,7 @@ class ContactService{
 
     async deleteAll(){
         const result = await this.contact.deleteMany({});
-
+        //la deleted chu kho phai delete
         return result.deletedCount;
     }
 
